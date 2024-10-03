@@ -26,7 +26,7 @@ interface MenuItem {
   price: number;
   description: string;
   category: string;
-  imageFile: File;
+  imageFile: string;
 }
 
 const AdminDashboard: React.FC = () => {
@@ -39,7 +39,9 @@ const AdminDashboard: React.FC = () => {
     price: 0,
     category: '',
     imageUrl: '',
+    imageFile: null as File | null,  // Add imageFile as a File or null
   });
+  
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [selectedItem, setSelectedItem] = useState<string | null>('orders');
   const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal visibility
@@ -120,8 +122,10 @@ const AdminDashboard: React.FC = () => {
         description: '',
         price: 0,
         category: '',
-        imageFile: null, 
+        imageUrl: '', // Add imageUrl as an empty string
+        imageFile: null, // Initialize imageFile as null
       });
+      
       setIsModalOpen(false);
       await fetchMenuItems();
     } catch (err) {
@@ -405,8 +409,13 @@ const AdminDashboard: React.FC = () => {
               type="file"
               ref={fileInputRef}
               className="w-full p-2 mb-4 border rounded"
-              onChange={(e) => setNewMenuItem({ ...newMenuItem, imageFile: e.target.files[0] })}
+              onChange={(e) => {
+                if (e.target.files && e.target.files[0]) {
+                  setNewMenuItem({ ...newMenuItem, imageFile: e.target.files[0] });
+                }
+              }}
             />
+
 
             <div className="flex justify-between">
               <button onClick={closeModal} className="px-4 py-2 bg-gray-500 text-white rounded">Cancel</button>

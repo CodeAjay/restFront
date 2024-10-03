@@ -13,12 +13,12 @@ interface AuthContextValue {
 export const AuthContext = createContext<AuthContextValue>({
   isAuthenticated: false,
   role: null,
-  login: () => {},
+  login: () => {}, 
   logout: () => {},
   loading: false,
 });
 
-export const AuthProvider: React.FC = ({ children }) => {
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [role, setRole] = useState<string | null>(null);

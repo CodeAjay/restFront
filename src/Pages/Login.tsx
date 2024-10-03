@@ -5,10 +5,10 @@ import { AuthContext } from '../AuthContext';
 
 interface LoginProps {}
 
-interface LoginState {
-  username: string;
-  password: string;
-}
+// interface LoginState {
+//   username: string;
+//   password: string;
+// }
 
 // Define the interface for the expected response data from the login API
 interface LoginResponse {
