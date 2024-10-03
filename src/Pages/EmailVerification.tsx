@@ -15,7 +15,7 @@ const EmailVerification: React.FC = () => {
         const verifyEmail = async () => {
           try {
             if (!token) return; // If token is empty, don't make the request
-            const response = await axios.get(`http://localhost:3000/verify/${token}`);
+            const response = await axios.get(`https://rest-back-bice.vercel.app/verify/${token}`);
             if (response.status === 200) {
               setVerificationResult(response.data.message);
             } else if (response.status === 409) {

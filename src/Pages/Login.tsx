@@ -55,7 +55,7 @@ const Login: React.FC<LoginProps> = () => {
         <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block text-gray-700 mb-2" htmlFor="email">Email</label>
+            <label className="block text-gray-700 mb-2" htmlFor="email">Username</label>
             <input
               type="text"
               id="email"

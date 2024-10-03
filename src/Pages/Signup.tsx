@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 const Signup = () => {
+  const [name, setName] = useState<string>(''); // New state for name
   const [username, setUsername] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -22,7 +23,8 @@ const Signup = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!username || !email || !password) {
+    // Validate fields
+    if (!name || !username || !email || !password) {
       setError('All fields are mandatory.');
       return;
     }
@@ -40,9 +42,9 @@ const Signup = () => {
     setLoading(true);
     setError(null);
 
-
     try {
-      const response = await axios.post('http://localhost:3000/api/users/register', {
+      const response = await axios.post('https://rest-back-bice.vercel.app/api/users/register', {
+        name,         // Include the name field
         username,
         email,
         password
@@ -53,7 +55,7 @@ const Signup = () => {
       if (response.data.message === 'User registered successfully. Please verify your email.') {
         setVerificationMessage('Registered successfully. Please verify your email before logging in.');
       }
-    } catch (error:any) {
+    } catch (error: any) {
       console.log(error);
       if (error.response && error.response.data && error.response.data.message) {
         if (error.response.data.message.includes('Username')) {
@@ -78,6 +80,17 @@ const Signup = () => {
         <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
         {verificationMessage ? verificationMessage : (
           <form onSubmit={handleSubmit}>
+            <div className="mb-4">
+              <label className="block text-gray-700 mb-2" htmlFor="name">Name</label> {/* New input for name */}
+              <input
+                type="text"
+                id="name"
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-yellow-500"
+                placeholder="Enter your name"
+                value={name}
+                onChange={(e) => setName(e.target.value)} // Update name state
+              />
+            </div>
             <div className="mb-4">
               <label className="block text-gray-700 mb-2" htmlFor="username">Username</label>
               <input

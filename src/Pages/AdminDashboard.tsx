@@ -140,7 +140,7 @@ const AdminDashboard: React.FC = () => {
     setDeleteLoading(true);
     if (!itemToDelete) return;
     try {
-      await axios.delete(`http://localhost:3000/api/menu/${itemToDelete}`, {
+      await axios.delete(`https://rest-back-bice.vercel.app/api/menu/${itemToDelete}`, {
         headers: { 'x-auth-token': `${token}` },
       });
       setMenuItems(menuItems.filter((item) => item._id !== itemToDelete));
