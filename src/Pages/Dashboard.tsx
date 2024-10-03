@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { FaBars, FaChevronLeft, FaChevronRight, FaShoppingCart, FaUserCircle, FaHeart, FaBell, FaCog } from 'react-icons/fa';
+import { FaChevronLeft, FaChevronRight, FaShoppingCart, FaUserCircle, FaHeart, FaBell, FaCog } from 'react-icons/fa';
 
 interface Order {
   _id: string;
@@ -11,7 +11,7 @@ interface Order {
   status: string;
 }
 
-interface Feedback {
+interface Feedback { 
   id: number;
   date: string;
   rating: number;
@@ -19,9 +19,9 @@ interface Feedback {
 }
 
 const Dashboard: React.FC = () => {
-  const token = localStorage.getItem('token');
+  // const token = localStorage.getItem('token');
   const [orders, setOrders] = useState<Order[]>([]);
-  const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
+  const [feedbacks] = useState<Feedback[]>([]);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [selectedItem, setSelectedItem] = useState<string | null>('orders');
 

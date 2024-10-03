@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useCart } from './CartContext';
-import { FaCarTunnel } from 'react-icons/fa6';
 import { FaCartPlus } from 'react-icons/fa';
 
 interface MenuItem {
@@ -46,12 +45,12 @@ const Menu: React.FC = () => {
     fetchMenuItems();
   }, []);
 
-  const handleQuantityChange = (id: string, value: number) => {
-    setQuantities({
-      ...quantities,
-      [id]: value
-    });
-  };
+  // const handleQuantityChange = (id: string, value: number) => {
+  //   setQuantities({
+  //     ...quantities,
+  //     [id]: value
+  //   });
+  // };
 
   const isItemInCart = (itemId: string) => {
     return cartItems.some(item => item._id === itemId);

@@ -1,4 +1,3 @@
-import React from 'react'
 import Hero from '../components/Hero'
 import About from '../components/About'
 import Menu from '../components/Menu'
@@ -9,7 +8,7 @@ import CallToAction from '../components/CallToAction'
 import Features from '../components/Features'
 import Newsletter from '../components/Newsletter'
 
-function Home() {
+function Home() { 
   return (
     <>
         <Hero />

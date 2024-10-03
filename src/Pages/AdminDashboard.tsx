@@ -1,18 +1,16 @@
 import axios from 'axios';
 import React, { useEffect, useState, useRef } from 'react';
 import {
-  FaBars,
   FaChevronLeft,
   FaChevronRight,
   FaShoppingCart,
   FaUtensils,
   FaUserCircle,
-  FaHeart,
   FaBell,
   FaCog,
   FaPlus,
 } from 'react-icons/fa';
-
+ 
 interface Order {
   _id: string;
   orderId: string;
@@ -28,7 +26,7 @@ interface MenuItem {
   price: number;
   description: string;
   category: string;
-  imageUrl: string;
+  imageFile: File;
 }
 
 const AdminDashboard: React.FC = () => {
@@ -122,7 +120,7 @@ const AdminDashboard: React.FC = () => {
         description: '',
         price: 0,
         category: '',
-        imageFile: null, // Reset file input
+        imageFile: null, 
       });
       setIsModalOpen(false);
       await fetchMenuItems();
@@ -321,7 +319,7 @@ const AdminDashboard: React.FC = () => {
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {menuItems.map((menuItem) => (
                 <div key={menuItem._id} className="bg-white p-4 rounded-lg shadow">
-                  <img src={menuItem.imageUrl} alt={menuItem.name} className="w-full h-40 object-cover rounded mb-4" />
+                  <img src={menuItem.imageFile} alt={menuItem.name} className="w-full h-40 object-cover rounded mb-4" />
                   <h3 className="font-bold">{menuItem.name}</h3>
                   <p>{menuItem.description}</p>
                   <p className="text-gray-500">Category: {menuItem.category}</p>
