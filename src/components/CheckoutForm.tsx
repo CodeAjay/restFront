@@ -16,7 +16,7 @@ const CheckoutForm: React.FC<{ onSubmit: (message: string) => void }> = ({ onSub
 
     try {
       const response = await axios.post(
-        'http://localhost:3000/api/orders',
+        'https://rest-front.vercel.app/api/orders',
         {
           items: cartItems.map(item => ({ menuItem: item._id, quantity: item.quantity })),
           name,
@@ -45,7 +45,7 @@ const CheckoutForm: React.FC<{ onSubmit: (message: string) => void }> = ({ onSub
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-lg">
+    <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-lg mt-[10%]">
       <h2 className="text-2xl font-bold mb-4">Checkout</h2>
       <div className="mb-4">
         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
