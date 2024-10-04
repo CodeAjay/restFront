@@ -26,6 +26,7 @@ interface MenuItem {
   price: number;
   description: string;
   category: string;
+  imageUrl: string,
   imageFile: string;
 }
 
@@ -65,11 +66,14 @@ const AdminDashboard: React.FC = () => {
         headers: { 'x-auth-token': `${token}` },
       });
       setMenuItems(response.data);
+      
     } catch (err) {
       console.error('Error fetching menu items:', err);
     }
+
     setMenuLoading(false);
   };
+
 
   // Fetch orders
   const fetchOrders = async () => {
@@ -83,6 +87,8 @@ const AdminDashboard: React.FC = () => {
     } catch (err) {
       console.error('Error fetching orders:', err);
     }
+    
+  console.log("Menu ites are: ",menuItems)
     setOrderLoading(false);
   };
 
@@ -125,7 +131,6 @@ const AdminDashboard: React.FC = () => {
         imageUrl: '', // Add imageUrl as an empty string
         imageFile: null, // Initialize imageFile as null
       });
-      
       setIsModalOpen(false);
       await fetchMenuItems();
     } catch (err) {
@@ -150,6 +155,7 @@ const AdminDashboard: React.FC = () => {
     } catch (err) {
       console.error('Error deleting menu item:', err);
     }
+    
     setDeleteLoading(false);
   };
 
@@ -322,8 +328,9 @@ const AdminDashboard: React.FC = () => {
             </button>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {menuItems.map((menuItem) => (
+                
                 <div key={menuItem._id} className="bg-white p-4 rounded-lg shadow">
-                  <img src={menuItem.imageFile} alt={menuItem.name} className="w-full h-40 object-cover rounded mb-4" />
+                  <img src={menuItem.imageUrl} alt={menuItem.name} className="w-full h-40 object-cover rounded mb-4" />
                   <h3 className="font-bold">{menuItem.name}</h3>
                   <p>{menuItem.description}</p>
                   <p className="text-gray-500">Category: {menuItem.category}</p>
