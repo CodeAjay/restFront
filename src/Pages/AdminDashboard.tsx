@@ -61,7 +61,7 @@ const AdminDashboard: React.FC = () => {
     setMenuLoading(true);
     if (!token) return;
     try {
-      const response = await axios.get('http://localhost:3000/api/menu', {
+      const response = await axios.get('https://rest-back-bice.vercel.app/api/menu', {
         headers: { 'x-auth-token': `${token}` },
       });
       setMenuItems(response.data);
@@ -76,7 +76,7 @@ const AdminDashboard: React.FC = () => {
     setOrderLoading(true);
     if (!token) return;
     try {
-      const response = await axios.get('http://localhost:3000/api/orders', {
+      const response = await axios.get('https://rest-back-bice.vercel.app/api/orders', {
         headers: { 'x-auth-token': `${token}` },
       });
       setOrders(response.data);
@@ -109,7 +109,7 @@ const AdminDashboard: React.FC = () => {
     }
   
     try {
-      const response = await axios.post('http://localhost:3000/api/menu', formData, {
+      const response = await axios.post('https://rest-back-bice.vercel.app/api/menu', formData, {
         headers: {
           'x-auth-token': `${token}`,
           'Content-Type': 'multipart/form-data', // Ensure file is handled correctly
@@ -168,7 +168,7 @@ const AdminDashboard: React.FC = () => {
       if (!status) return; // Prevent updating if no status is selected
   
       await axios.put(
-        `http://localhost:3000/api/orders/${orderId}`,
+        `https://rest-back-bice.vercel.app/api/orders/${orderId}`,
         {
           status,
         },
