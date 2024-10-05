@@ -381,8 +381,12 @@ const AdminDashboard: React.FC = () => {
 
       {/* Modal for adding menu item */}
       {isModalOpen && (
-        addLoading?"Adding the Item":
         <div className="fixed inset-0 bg-gray-700 bg-opacity-50 flex justify-center items-center">
+          { addLoading?
+          <div className="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full">
+            <h3>Adding the Item...</h3>
+          </div>
+          :
           <div className="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full">
             <h3 className="text-2xl font-bold mb-4">Add New Menu Item</h3>
             <input
@@ -429,13 +433,18 @@ const AdminDashboard: React.FC = () => {
               <button onClick={handleAddMenuItem} className="px-4 py-2 bg-green-500 text-white rounded">Add</button>
             </div>
           </div>
+          }
         </div>
       )}
 
       {/* Delete Confirmation Modal */}
       {isDeleteModalOpen && (
-        deleteLoading?"Deleting the Item":
         <div className="fixed inset-0 bg-gray-700 bg-opacity-50 flex justify-center items-center">
+         {deleteLoading?
+         <div className="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full">
+            <h3 className="text-2xl font-bold mb-4">Deleting the Item...</h3>
+          </div>
+         :
           <div className="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full">
             <h3 className="text-2xl font-bold mb-4">Are you sure you want to delete this item?</h3>
             <div className="flex justify-between">
@@ -443,6 +452,7 @@ const AdminDashboard: React.FC = () => {
               <button onClick={handleDeleteMenuItem} className="px-4 py-2 bg-red-500 text-white rounded">Delete</button>
             </div>
           </div>
+          }   
         </div>
       )}
     </div>

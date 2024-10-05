@@ -17,8 +17,10 @@ const Menu: React.FC = () => {
   const [notification, setNotification] = useState<{ [key: string]: string }>({});
   const [buttonText, setButtonText] = useState<{ [key: string]: string }>({});
   const { addToCart, cartItems } = useCart();
+  const [menuLoading, setMenuLoading]=useState(false);
 
   useEffect(() => {
+    setMenuLoading(true);
     const fetchMenuItems = async () => {
       try {
         const response = await axios.get<MenuItem[]>('https://rest-back-bice.vercel.app/api/menu');
@@ -40,6 +42,7 @@ const Menu: React.FC = () => {
       } catch (error) {
         console.error('Error fetching menu items:', error);
       }
+      setMenuLoading(false)
     };
 
     fetchMenuItems();
@@ -91,6 +94,11 @@ const Menu: React.FC = () => {
 
   return (
     <section id="menu" className="bg-gradient-to-r from-gray-900 to-gray-800 py-16">
+      {menuLoading?
+      <div className="container mx-auto text-center">
+        <h2 className="text-5xl font-bold mb-12 text-white">Loading Menu....</h2>
+      </div>
+      :
       <div className="container mx-auto text-center">
         <h2 className="text-5xl font-bold mb-12 text-white">Our Menu</h2>
         <div className="grid lg:grid-cols-4 sm:grid-cols-2 gap-8">
@@ -158,6 +166,7 @@ const Menu: React.FC = () => {
           ))}
         </div>
       </div>
+      }
     </section>
   );
 };

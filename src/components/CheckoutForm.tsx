@@ -45,10 +45,12 @@ const CheckoutForm: React.FC<{ onSubmit: (message: string) => void }> = ({ onSub
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-lg mt-[10%]">
-      <h2 className="text-2xl font-bold mb-4">Checkout</h2>
-      <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
+    <form onSubmit={handleSubmit} className="bg-gray-900 p-8 rounded-lg shadow-2xl text-white">
+      <h2 className="text-4xl font-bold text-yellow-400 mb-8">Checkout</h2>
+      
+      {/* Name Input */}
+      <div className="mb-6">
+        <label className="block text-lg font-medium text-gray-400 mb-2" htmlFor="name">
           Name
         </label>
         <input
@@ -56,12 +58,15 @@ const CheckoutForm: React.FC<{ onSubmit: (message: string) => void }> = ({ onSub
           id="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="w-full px-3 py-2 border rounded"
+          className="w-full px-4 py-3 border border-gray-700 rounded-lg bg-gray-800 text-white focus:outline-none focus:border-yellow-500"
+          placeholder="Enter your name"
           required
         />
       </div>
-      <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="address">
+      
+      {/* Address Input */}
+      <div className="mb-6">
+        <label className="block text-lg font-medium text-gray-400 mb-2" htmlFor="address">
           Address
         </label>
         <input
@@ -69,12 +74,15 @@ const CheckoutForm: React.FC<{ onSubmit: (message: string) => void }> = ({ onSub
           id="address"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
-          className="w-full px-3 py-2 border rounded"
+          className="w-full px-4 py-3 border border-gray-700 rounded-lg bg-gray-800 text-white focus:outline-none focus:border-yellow-500"
+          placeholder="Enter your address"
           required
         />
       </div>
-      <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+      
+      {/* Email Input */}
+      <div className="mb-6">
+        <label className="block text-lg font-medium text-gray-400 mb-2" htmlFor="email">
           Email
         </label>
         <input
@@ -82,15 +90,18 @@ const CheckoutForm: React.FC<{ onSubmit: (message: string) => void }> = ({ onSub
           id="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full px-3 py-2 border rounded"
+          className="w-full px-4 py-3 border border-gray-700 rounded-lg bg-gray-800 text-white focus:outline-none focus:border-yellow-500"
+          placeholder="Enter your email"
           required
         />
       </div>
+
+      {/* Submit Button */}
       <button
         type="submit"
-        className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        className="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-4 rounded-lg shadow-lg transition duration-300 focus:outline-none focus:ring-4 focus:ring-yellow-300"
       >
-        Submit
+        Place Order
       </button>
     </form>
   );

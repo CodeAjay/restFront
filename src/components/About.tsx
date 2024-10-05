@@ -1,5 +1,5 @@
 
-const About = () => { 
+const About: React.FC = () => { 
   return (
     <section id="about" className="relative py-16 bg-gradient-to-br from-gray-900 to-gray-800 text-white overflow-hidden">
       {/* Diagonal Cut */}

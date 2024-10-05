@@ -24,9 +24,11 @@ const Dashboard: React.FC = () => {
   const [feedbacks] = useState<Feedback[]>([]);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [selectedItem, setSelectedItem] = useState<string | null>('orders');
+  const [orderLoading, setOrderLoading]=useState(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
+      setOrderLoading(true)
       const token = localStorage.getItem('token');
 
       if (!token) {
@@ -44,6 +46,7 @@ const Dashboard: React.FC = () => {
       } catch (err) {
         console.error('Error fetching user data', err);
       }
+      setOrderLoading(false)
     };
 
     fetchUserData();
@@ -137,6 +140,7 @@ const Dashboard: React.FC = () => {
       {/* Main Content */}
       <div className={`flex-grow bg-gray-100 p-8 transition-all duration-300 ${isSidebarCollapsed ? 'ml-16' : 'ml-64'}`}>
         {selectedItem === 'orders' && (
+          orderLoading?<h2>Orders Loading....</h2>:
           <div>
             <h2 className="text-2xl font-bold mb-4">Orders</h2>
             <div className="bg-white p-4 rounded-lg shadow">
