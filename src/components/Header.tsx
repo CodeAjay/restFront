@@ -19,7 +19,7 @@ const Header: React.FC = () => {
   };
 
   // Calculate total number of items in the cart
-  const totalItemsInCart = cartItems.reduce((total, item) => total + item.quantity, 0);
+  const totalItemsInCart = cartItems.length;
 
   return (
     <nav className="bg-gradient-to-r from-gray-800 to-gray-900 text-white p-4 shadow-lg sticky top-0 z-50">
