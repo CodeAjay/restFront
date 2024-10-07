@@ -35,7 +35,7 @@ const Login: React.FC<LoginProps> = () => {
 
       const { token, user } = response.data;
 
-      console.log("role is ", user.role)
+      // console.log("role is ", user.role)
       // Check if the token exists, then log in the user and navigate based on role
       if (token) {
         login(token, user.role); // Pass both token and role to login function

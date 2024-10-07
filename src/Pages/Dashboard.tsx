@@ -41,7 +41,7 @@ const Dashboard: React.FC = () => {
             'x-auth-token': `${token}`,
           },
         });
-        console.log(response.data);
+        // console.log(response.data);
         setOrders(response.data);
       } catch (err) {
         console.error('Error fetching user data', err);
