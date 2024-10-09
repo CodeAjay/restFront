@@ -17,8 +17,6 @@ const CheckoutForm: React.FC<{ onSubmit: (message: string) => void }> = ({ onSub
   const [orderId, setOrderId] = useState('');
   const [message, setMessage] = useState('');
 
-  const navigate = useNavigate();
-
   useEffect(() => {
     const calculateTotal = () => {
       const newTotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
