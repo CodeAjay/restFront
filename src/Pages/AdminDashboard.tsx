@@ -10,7 +10,7 @@ import {
   FaCog,
   FaPlus,
 } from 'react-icons/fa';
- 
+
 interface Order {
   _id: string;
   orderId: string;
@@ -42,18 +42,18 @@ const AdminDashboard: React.FC = () => {
     imageUrl: '',
     imageFile: null as File | null,  // Add imageFile as a File or null
   });
-  
+
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [selectedItem, setSelectedItem] = useState<string | null>('orders');
   const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal visibility
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false); // State for delete confirmation modal
   const [itemToDelete, setItemToDelete] = useState<string | null>(null); // Track the item to be deleted
   const [orderStatus, setOrderStatus] = useState<{ [key: string]: string }>({});
-  const [menuLoading, setMenuLoading]=useState(false);
-  const [orderLoading, setOrderLoading]=useState(false);
-  const [deleteLoading, setDeleteLoading]=useState(false);
-  const [addLoading, setAddLoading]=useState(false);
-  
+  const [menuLoading, setMenuLoading] = useState(false);
+  const [orderLoading, setOrderLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [addLoading, setAddLoading] = useState(false);
+
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -66,7 +66,7 @@ const AdminDashboard: React.FC = () => {
         headers: { 'x-auth-token': `${token}` },
       });
       setMenuItems(response.data);
-      
+
     } catch (err) {
       console.error('Error fetching menu items:', err);
     }
@@ -87,8 +87,8 @@ const AdminDashboard: React.FC = () => {
     } catch (err) {
       console.error('Error fetching orders:', err);
     }
-    
-  console.log("Menu ites are: ",menuItems)
+
+    console.log("Menu ites are: ", menuItems)
     setOrderLoading(false);
   };
 
@@ -113,7 +113,7 @@ const AdminDashboard: React.FC = () => {
     if (fileInputRef.current && fileInputRef.current.files) {
       formData.append('image', fileInputRef.current.files[0]);
     }
-  
+
     try {
       const response = await axios.post('https://rest-back-bice.vercel.app/api/menu', formData, {
         headers: {
@@ -121,7 +121,7 @@ const AdminDashboard: React.FC = () => {
           'Content-Type': 'multipart/form-data', // Ensure file is handled correctly
         },
       });
-  
+
       setMenuItems([...menuItems, response.data]);
       setNewMenuItem({
         name: '',
@@ -138,7 +138,7 @@ const AdminDashboard: React.FC = () => {
     }
     setAddLoading(false);
   };
-  
+
 
   // Delete menu item
   const handleDeleteMenuItem = async () => {
@@ -155,7 +155,7 @@ const AdminDashboard: React.FC = () => {
     } catch (err) {
       console.error('Error deleting menu item:', err);
     }
-    
+
     setDeleteLoading(false);
   };
 
@@ -165,14 +165,14 @@ const AdminDashboard: React.FC = () => {
       [orderId]: value,
     }));
   };
-  
+
 
   // Change order status
   const handleChangeOrderStatus = async (orderId: string) => {
     try {
       const status = orderStatus[orderId];
       if (!status) return; // Prevent updating if no status is selected
-  
+
       await axios.put(
         `https://rest-back-bice.vercel.app/api/orders/${orderId}`,
         {
@@ -182,14 +182,14 @@ const AdminDashboard: React.FC = () => {
           headers: { 'x-auth-token': `${token}` },
         }
       );
-      
+
       // Update the order status in the local state
       setOrders(
         orders.map((order) =>
           order._id === orderId ? { ...order, status } : order
         )
       );
-      
+
       // Optionally clear the status after updating
       setOrderStatus((prevStatus) => ({
         ...prevStatus,
@@ -199,7 +199,7 @@ const AdminDashboard: React.FC = () => {
       console.error('Error updating order status:', err);
     }
   };
-  
+
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -265,89 +265,91 @@ const AdminDashboard: React.FC = () => {
       {/* Main Content */}
       <div className={`flex-grow bg-gray-100 p-8 transition-all duration-300 ${isSidebarCollapsed ? 'ml-16' : 'ml-64'}`}>
         {selectedItem === 'orders' && (
-          orderLoading?"Fetching Orders":
-          <div>
-            <h2 className="text-2xl font-bold mb-4">Orders</h2>
-            <div className="bg-white p-4 rounded-lg shadow">
-              <table className="w-full">
-                <thead>
-                  <tr>
-                    <th className="text-left">Order ID</th>
-                    <th className="text-left">Date</th>
-                    <th className="text-left">Items</th>
-                    <th className="text-left">Total</th>
-                    <th className="text-left">Status</th>
-                    <th className="text-left">Change Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                {orders.map((order) => (
-                  <tr key={order._id}>
-                    <td>{order.orderId}</td>
-                    <td>{formatDate(order.createdAt)}</td>
-                    <td>{order.items.map((el) => el.menuItem.name).join(', ')}</td>
-                    <td>${order.totalAmount ? order.totalAmount.toFixed(2) : 'N/A'}</td>
-                    <td>{order.status}</td>
-                    <td>
-                      <select
-                        value={orderStatus[order._id] || ''} // Use the specific order's status
-                        onChange={(e) => handleStatusChange(order._id, e.target.value)}
-                        className="p-2 border rounded"
-                      >
-                        <option value="">Select Status</option>
-                        <option value="Pending">Pending</option>
-                        <option value="Completed">Completed</option>
-                        <option value="Canceled">Canceled</option>
-                      </select>
-                      <button
-                        onClick={() => handleChangeOrderStatus(order._id)}
-                        className="ml-2 p-2 bg-blue-500 text-white rounded"
-                      >
-                        Update
-                      </button>
-                    </td>
-                  </tr>
-                ))}
+          orderLoading ? "Fetching Orders" :
+            <div>
+              <h2 className="text-2xl font-bold mb-4">Orders</h2>
+              <div className="bg-white p-4 rounded-lg shadow">
+                <table className="w-full">
+                  <thead>
+                    <tr>
+                      <th className="px-3 py-4 text-left">Order ID</th>
+                      <th className="px-3 py-4 text-left">Date</th>
+                      <th className="px-3 py-4 text-left">Items</th>
+                      <th className="px-3 py-4 text-left">Total</th>
+                      <th className="px-3 py-4 text-left">Status</th>
+                      <th className="px-3 py-4 text-left">Change Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {orders.map((order) => (
+                      <tr key={order._id} className='bg-white odd:bg-gray-100'>
+                        <td className='px-3 py-4'>{order.orderId}</td>
+                        <td className='px-3 py-4'>{formatDate(order.createdAt)}</td>
+                        <td className='px-3 py-4'>{order.items.map((el) => el.menuItem.name).join(', ')}</td>
+                        <td className='px-3 py-4'>${order.totalAmount ? order.totalAmount.toFixed(2) : 'N/A'}</td>
+                        <td className={`px-3 py-4 ${order.status=="Pending"?"text-yellow-600":order.status=="Canceled"?"text-red-600":"text-green-600"}`}>{order.status}</td>
+                        <td className='px-3 py-4'>
+                          <div className="flex items-center space-x-2"> {/* Flexbox container */}
+                            <select
+                              value={orderStatus[order._id] || ''} // Use the specific order's status
+                              onChange={(e) => handleStatusChange(order._id, e.target.value)}
+                              className="p-2 border rounded"
+                            >
+                              <option value="" className={`${order.status=="Pending"?"text-yellow-600":order.status=="Canceled"?"text-red-600":"text-green-600"}`}>{order.status}</option>
+                              <option value="Pending">Pending</option>
+                              <option value="Completed">Completed</option>
+                              <option value="Canceled">Canceled</option>
+                            </select>
+                            <button
+                              onClick={() => handleChangeOrderStatus(order._id)}
+                              className="p-2 bg-blue-500 text-white rounded"
+                            >
+                              Update
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
 
-                </tbody>
-              </table>
+                  </tbody>
+                </table>
+              </div>
             </div>
-          </div>
         )}
 
         {selectedItem === 'menu' && (
-          menuLoading?"Menu is Loading":
-          <div>
-            <h2 className="text-2xl font-bold mb-4">Manage Menu</h2>
-            <button
-              className="mb-4 px-4 py-2 bg-green-500 text-white rounded flex items-center"
-              onClick={() => setIsModalOpen(true)}
-            >
-              <FaPlus className="mr-2" />
-              Add Menu Item
-            </button>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {menuItems.map((menuItem) => (
-                
-                <div key={menuItem._id} className="bg-white p-4 rounded-lg shadow">
-                  <img src={menuItem.imageUrl} alt={menuItem.name} className="w-full h-40 object-cover rounded mb-4" />
-                  <h3 className="font-bold">{menuItem.name}</h3>
-                  <p>{menuItem.description}</p>
-                  <p className="text-gray-500">Category: {menuItem.category}</p>
-                  <p className="font-bold text-xl">${menuItem.price}</p>
-                  <button
-                    onClick={() => {    
-                      setItemToDelete(menuItem._id);
-                      setIsDeleteModalOpen(true);
-                    }}
-                    className="mt-2 bg-red-500 text-white py-1 px-4 rounded"
-                  >
-                    Delete
-                  </button>
-                </div>
-              ))}
+          menuLoading ? "Menu is Loading" :
+            <div>
+              <h2 className="text-2xl font-bold mb-4">Manage Menu</h2>
+              <button
+                className="mb-4 px-4 py-2 bg-green-500 text-white rounded flex items-center"
+                onClick={() => setIsModalOpen(true)}
+              >
+                <FaPlus className="mr-2" />
+                Add Menu Item
+              </button>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {menuItems.map((menuItem) => (
+
+                  <div key={menuItem._id} className="bg-white p-4 rounded-lg shadow">
+                    <img src={menuItem.imageUrl} alt={menuItem.name} className="w-full h-40 object-cover rounded mb-4" />
+                    <h3 className="font-bold">{menuItem.name}</h3>
+                    <p>{menuItem.description}</p>
+                    <p className="text-gray-500">Category: {menuItem.category}</p>
+                    <p className="font-bold text-xl">${menuItem.price}</p>
+                    <button
+                      onClick={() => {
+                        setItemToDelete(menuItem._id);
+                        setIsDeleteModalOpen(true);
+                      }}
+                      className="mt-2 bg-red-500 text-white py-1 px-4 rounded"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
         )}
 
         {selectedItem === 'feedback' && (
@@ -382,58 +384,58 @@ const AdminDashboard: React.FC = () => {
       {/* Modal for adding menu item */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-gray-700 bg-opacity-50 flex justify-center items-center">
-          { addLoading?
-          <div className="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full">
-            <h3>Adding the Item...</h3>
-          </div>
-          :
-          <div className="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full">
-            <h3 className="text-2xl font-bold mb-4">Add New Menu Item</h3>
-            <input
-              type="text"
-              placeholder="Name"
-              className="w-full p-2 mb-4 border rounded"
-              value={newMenuItem.name}
-              onChange={(e) => setNewMenuItem({ ...newMenuItem, name: e.target.value })}
-            />
-            <textarea
-              placeholder="Description"
-              className="w-full p-2 mb-4 border rounded"
-              value={newMenuItem.description}
-              onChange={(e) => setNewMenuItem({ ...newMenuItem, description: e.target.value })}
-            />
-            <input
-              type="number"
-              min="1"
-              placeholder="Price"
-              className="w-full p-2 mb-4 border rounded"
-              value={newMenuItem.price}
-              onChange={(e) => setNewMenuItem({ ...newMenuItem, price: Number(e.target.value) })}
-            />
-            <input
-              type="text"
-              placeholder="Category"
-              className="w-full p-2 mb-4 border rounded"
-              value={newMenuItem.category}
-              onChange={(e) => setNewMenuItem({ ...newMenuItem, category: e.target.value })}
-            />
-            <input
-              type="file"
-              ref={fileInputRef}
-              className="w-full p-2 mb-4 border rounded"
-              onChange={(e) => {
-                if (e.target.files && e.target.files[0]) {
-                  setNewMenuItem({ ...newMenuItem, imageFile: e.target.files[0] });
-                }
-              }}
-            />
-
-
-            <div className="flex justify-between">
-              <button onClick={closeModal} className="px-4 py-2 bg-gray-500 text-white rounded">Cancel</button>
-              <button onClick={handleAddMenuItem} className="px-4 py-2 bg-green-500 text-white rounded">Add</button>
+          {addLoading ?
+            <div className="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full">
+              <h3>Adding the Item...</h3>
             </div>
-          </div>
+            :
+            <div className="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full">
+              <h3 className="text-2xl font-bold mb-4">Add New Menu Item</h3>
+              <input
+                type="text"
+                placeholder="Name"
+                className="w-full p-2 mb-4 border rounded"
+                value={newMenuItem.name}
+                onChange={(e) => setNewMenuItem({ ...newMenuItem, name: e.target.value })}
+              />
+              <textarea
+                placeholder="Description"
+                className="w-full p-2 mb-4 border rounded"
+                value={newMenuItem.description}
+                onChange={(e) => setNewMenuItem({ ...newMenuItem, description: e.target.value })}
+              />
+              <input
+                type="number"
+                min="1"
+                placeholder="Price"
+                className="w-full p-2 mb-4 border rounded"
+                value={newMenuItem.price}
+                onChange={(e) => setNewMenuItem({ ...newMenuItem, price: Number(e.target.value) })}
+              />
+              <input
+                type="text"
+                placeholder="Category"
+                className="w-full p-2 mb-4 border rounded"
+                value={newMenuItem.category}
+                onChange={(e) => setNewMenuItem({ ...newMenuItem, category: e.target.value })}
+              />
+              <input
+                type="file"
+                ref={fileInputRef}
+                className="w-full p-2 mb-4 border rounded"
+                onChange={(e) => {
+                  if (e.target.files && e.target.files[0]) {
+                    setNewMenuItem({ ...newMenuItem, imageFile: e.target.files[0] });
+                  }
+                }}
+              />
+
+
+              <div className="flex justify-between">
+                <button onClick={closeModal} className="px-4 py-2 bg-gray-500 text-white rounded">Cancel</button>
+                <button onClick={handleAddMenuItem} className="px-4 py-2 bg-green-500 text-white rounded">Add</button>
+              </div>
+            </div>
           }
         </div>
       )}
@@ -441,19 +443,19 @@ const AdminDashboard: React.FC = () => {
       {/* Delete Confirmation Modal */}
       {isDeleteModalOpen && (
         <div className="fixed inset-0 bg-gray-700 bg-opacity-50 flex justify-center items-center">
-         {deleteLoading?
-         <div className="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full">
-            <h3 className="text-2xl font-bold mb-4">Deleting the Item...</h3>
-          </div>
-         :
-          <div className="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full">
-            <h3 className="text-2xl font-bold mb-4">Are you sure you want to delete this item?</h3>
-            <div className="flex justify-between">
-              <button onClick={closeDeleteModal} className="px-4 py-2 bg-gray-500 text-white rounded">Cancel</button>
-              <button onClick={handleDeleteMenuItem} className="px-4 py-2 bg-red-500 text-white rounded">Delete</button>
+          {deleteLoading ?
+            <div className="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full">
+              <h3 className="text-2xl font-bold mb-4">Deleting the Item...</h3>
             </div>
-          </div>
-          }   
+            :
+            <div className="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full">
+              <h3 className="text-2xl font-bold mb-4">Are you sure you want to delete this item?</h3>
+              <div className="flex justify-between">
+                <button onClick={closeDeleteModal} className="px-4 py-2 bg-gray-500 text-white rounded">Cancel</button>
+                <button onClick={handleDeleteMenuItem} className="px-4 py-2 bg-red-500 text-white rounded">Delete</button>
+              </div>
+            </div>
+          }
         </div>
       )}
     </div>
