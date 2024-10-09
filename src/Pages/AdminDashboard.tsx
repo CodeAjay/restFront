@@ -404,6 +404,7 @@ const AdminDashboard: React.FC = () => {
             />
             <input
               type="number"
+              min="1"
               placeholder="Price"
               className="w-full p-2 mb-4 border rounded"
               value={newMenuItem.price}

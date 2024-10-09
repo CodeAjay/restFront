@@ -16,7 +16,7 @@ const Signup = () => {
   };
 
   const validatePassword = (password: string): boolean => {
-    const re: RegExp = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const re: RegExp = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$,.!£%*?&])[A-Za-z\d@$,.£!%*?&]{8,}$/;
     return re.test(password);
   };
 
