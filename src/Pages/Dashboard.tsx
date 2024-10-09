@@ -147,21 +147,21 @@ const Dashboard: React.FC = () => {
               <table className="w-full">
                 <thead>
                   <tr>
-                    <th className="text-left">Order ID</th>
-                    <th className="text-left">Date</th>
-                    <th className="text-left">Items</th>
-                    <th className="text-left">Total</th>
-                    <th className="text-left">Status</th>
+                    <th className="px-3 py-4 text-left">Order ID</th>
+                    <th className="px-3 py-4 text-left">Date</th>
+                    <th className="px-3 py-4 text-left">Items</th>
+                    <th className="px-3 py-4 text-left">Total</th>
+                    <th className="px-3 py-4 text-left">Status</th>
                   </tr>
                 </thead>
                 <tbody>
                   {orders.map(order => (
-                    <tr key={order._id}>
-                      <td>{order.orderId}</td>
-                      <td>{formatDate(order.createdAt)}</td>
-                      <td>{order.items.map(el => el.menuItem.name).join(", ")}</td>
-                      <td>${order.totalAmount ? order.totalAmount.toFixed(2) : 'N/A'}</td>
-                      <td>{order.status}</td>
+                    <tr key={order._id} className='bg-white odd:bg-gray-100'>
+                      <td className='px-3 py-4'>{order.orderId}</td>
+                      <td className='px-3 py-4'>{formatDate(order.createdAt)}</td>
+                      <td className='px-3 py-4'>{order.items.map(el => el.menuItem.name).join(", ")}</td>
+                      <td className='px-3 py-4'>${order.totalAmount ? order.totalAmount.toFixed(2) : 'N/A'}</td>
+                      <td className={`px-3 py-4 ${order.status=="Pending"?"text-yellow-600":order.status=="Canceled"?"text-red-600":"text-green-600"}`}>{order.status}</td>
                     </tr>
                   ))}
                 </tbody>
