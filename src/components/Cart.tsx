@@ -39,7 +39,7 @@ const Cart: React.FC = () => {
     // Show success message and clear cart
     setSuccessMessage(message);
     clearCart(); // Clear the cart after success
-    setIsModalOpen(false);
+    // setIsModalOpen(false);
   };
 
   return (
@@ -154,10 +154,10 @@ const Cart: React.FC = () => {
           isOpen={isModalOpen}
           onRequestClose={() => setIsModalOpen(false)}
           contentLabel="Checkout Form"
-          className="flex justify-center items-center p-8"
-          overlayClassName="fixed inset-0 bg-gray-900 bg-opacity-75 flex justify-center items-center"
+          className="flex justify-center items-center p-8 w-[40%]"
+          overlayClassName="fixed z-50 inset-0 bg-gray-900 bg-opacity-75 flex justify-center items-center"
         >
-          <div className="bg-white p-8 rounded-lg shadow-2xl w-full max-w-lg">
+          <div className="bg-white w-[100%] rounded-lg shadow-2xl shadow-white w-full max-w-lg">
             <CheckoutForm onSubmit={handleFormSubmit} />
           </div>
         </Modal>
