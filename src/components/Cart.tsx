@@ -154,7 +154,7 @@ const Cart: React.FC = () => {
           isOpen={isModalOpen}
           onRequestClose={() => setIsModalOpen(false)}
           contentLabel="Checkout Form"
-          className="flex justify-center items-center p-8 w-[40%]"
+          className="flex justify-center items-center p-8 lg:w-[40%] md:w-[40%] sm:w-[40%] w-[100%]"
           overlayClassName="fixed z-50 inset-0 bg-gray-900 bg-opacity-75 flex justify-center items-center"
         >
           <div className="bg-white w-[100%] rounded-lg shadow-2xl shadow-white w-full max-w-lg">
